@@ -21,6 +21,7 @@
 #include "thread.h"
 #include "list.h"
 
+enum LockStatus {BUSY,FREE};
 // The following class defines a "semaphore" whose value is a non-negative
 // integer.  The semaphore has only two operations P() and V():
 //
@@ -79,6 +80,8 @@ class Lock {
 
   private:
     char* name;				// for debugging
+    LockStatus value;
+    Thread lockThread;
     // plus some other stuff you'll need to define
 };
 
