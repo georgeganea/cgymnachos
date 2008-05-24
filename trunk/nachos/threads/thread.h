@@ -103,7 +103,7 @@ class Thread {
     void Print() { printf("%s, ", name); }
     
     bool equals(Thread* thread){
-    	return strcmp(thread->getName(),name);	
+    	return (strcmp(thread->getName(),name) == 0);	
     }
 
   private:

@@ -28,7 +28,7 @@ int value = 5;
 void
 SimpleLockThread(int which)
 {
-    for (int num = 0; num < 5; num++) {
+    for (int num = 0; num < 6; num++) {
     	lock->Acquire();
     	printf("Incremented\n");
     	value++;
