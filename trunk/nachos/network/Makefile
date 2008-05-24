@@ -293,6 +293,27 @@ timer.o: ../machine/timer.cc ../threads/copyright.h ../machine/timer.h \
   ../filesys/synchdisk.h ../machine/disk.h ../threads/synch.h \
   ../network/post.h ../threads/copyright.h ../machine/network.h \
   ../threads/synchlist.h ../threads/synch.h
+locktest.o: ../threads/locktest.cc ../threads/copyright.h \
+  ../threads/system.h ../threads/utility.h \
+  /usr/lib/gcc/i486-linux-gnu/4.2.3/include/stdbool.h ../machine/sysdep.h \
+  ../threads/copyright.h /usr/include/stdio.h /usr/include/features.h \
+  /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
+  /usr/include/gnu/stubs.h /usr/include/gnu/stubs-32.h \
+  /usr/lib/gcc/i486-linux-gnu/4.2.3/include/stddef.h \
+  /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+  /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
+  /usr/lib/gcc/i486-linux-gnu/4.2.3/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/string.h /usr/include/xlocale.h ../threads/thread.h \
+  ../machine/machine.h ../threads/utility.h ../machine/translate.h \
+  ../machine/disk.h ../userprog/addrspace.h ../threads/copyright.h \
+  ../filesys/filesys.h ../threads/copyright.h ../filesys/openfile.h \
+  ../threads/utility.h ../threads/scheduler.h ../threads/list.h \
+  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+  ../machine/timer.h ../filesys/filesys.h ../filesys/synchdisk.h \
+  ../machine/disk.h ../threads/synch.h ../network/post.h \
+  ../threads/copyright.h ../machine/network.h ../threads/synchlist.h \
+  ../threads/synch.h
 addrspace.o: ../userprog/addrspace.cc ../threads/copyright.h \
   ../threads/system.h ../threads/copyright.h ../threads/utility.h \
   /usr/lib/gcc/i486-linux-gnu/4.2.3/include/stdbool.h ../machine/sysdep.h \
