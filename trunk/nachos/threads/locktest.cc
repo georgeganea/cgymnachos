@@ -12,6 +12,8 @@
 #include "copyright.h"
 #include "system.h"
 #include "synch.h"
+
+
 //----------------------------------------------------------------------
 // SimpleThread
 // 	Loop 5 times, yielding the CPU to another ready thread 
@@ -21,18 +23,18 @@
 //	purposes.
 //----------------------------------------------------------------------
 
-Lock* lock;
-int value;
-
+Lock* lock = new Lock("variable lock");
+int value = 5;
 void
 SimpleLockThread(int which)
 {
- for (int i = 0 ; i<10; i++){
-	lock->Acquire();
-    value++;
-    lock->Release();
-    currentThread->Yield();
- }
+    for (int num = 0; num < 5; num++) {
+    	lock->Acquire();
+    	printf("Incremented\n");
+    	value++;
+    	lock->Release();
+    	currentThread->Yield();
+    }
 }
 
 
@@ -45,18 +47,12 @@ SimpleLockThread(int which)
 void
 LockTest()
 {
-	
-	value = 0;
-	lock = new Lock("lock");
+	printf("Am intrat\n");
     DEBUG('t', "Entering Lock Test");
     Thread *t = new Thread("forked thread");
     t->Fork(SimpleLockThread, 1);
-    
-    for (int i=0;i<10;i++){
-    	lock->Acquire();
-    	printf("value = %d\n",value);
-    	lock->Release();
-    	currentThread->Yield();
-    }
+    lock->Acquire();
+    printf("value = %d\n",value);
+    lock->Release();
 }
 

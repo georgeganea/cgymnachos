@@ -296,7 +296,7 @@ locktest.o: ../threads/locktest.cc ../threads/copyright.h \
   ../threads/utility.h ../threads/scheduler.h ../threads/list.h \
   ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
   ../machine/timer.h ../filesys/filesys.h ../filesys/synchdisk.h \
-  ../machine/disk.h ../threads/synch.h
+  ../machine/disk.h ../threads/synch.h ../threads/synch.h
 addrspace.o: ../userprog/addrspace.cc ../threads/copyright.h \
   ../threads/system.h ../threads/copyright.h ../threads/utility.h \
   /usr/lib/gcc/i486-linux-gnu/4.2.3/include/stdbool.h ../machine/sysdep.h \
