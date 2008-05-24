@@ -56,7 +56,7 @@
 
 // External functions used by this file
 
-extern void ThreadTest(void), Copy(char *unixFile, char *nachosFile);
+extern void LockTest(void), ThreadTest(void), Copy(char *unixFile, char *nachosFile);
 extern void Print(char *file), PerformanceTest(void);
 extern void StartProcess(char *file), ConsoleTest(char *in, char *out);
 extern void MailTest(int networkID);
@@ -84,6 +84,9 @@ main(int argc, char **argv)
     DEBUG('t', "Entering main");
     (void) Initialize(argc, argv);
     
+#ifdef THREADS
+    LockTest();
+#endif
 #ifdef THREADS
     ThreadTest();
 #endif
