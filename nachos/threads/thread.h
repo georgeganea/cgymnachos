@@ -101,6 +101,10 @@ class Thread {
     void setStatus(ThreadStatus st) { status = st; }
     char* getName() { return (name); }
     void Print() { printf("%s, ", name); }
+    
+    bool equals(Thread* thread){
+    	return strcmp(thread->getName(),name);	
+    }
 
   private:
     // some of the private data for this class is listed above

@@ -81,7 +81,7 @@ class Lock {
   private:
     char* name;				// for debugging
     LockStatus value;
-    Thread lockThread;
+    Thread* lockThread;
     // plus some other stuff you'll need to define
 };
 

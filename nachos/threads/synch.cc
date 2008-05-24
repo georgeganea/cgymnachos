@@ -109,7 +109,7 @@ Lock::~Lock() {
 }
 void Lock::Acquire() {
 	 IntStatus oldLevel = interrupt->SetLevel(IntOff);	// disable interrupts
-	 while (value = BUSY)		// lock not available
+	 while (value == BUSY)		// lock not available
 		 currentThread->Sleep();	// go to sleep
 	 value = BUSY; 				// lock available
 	 lockThread = currentThread;
@@ -117,11 +117,13 @@ void Lock::Acquire() {
 }
 void Lock::Release() {
 	    IntStatus oldLevel = interrupt->SetLevel(IntOff);
-	    //if (currentThread)
-	    value = FREE;
+	    if (isHeldByCurrentThread())
+	    	value = FREE;
 	    (void) interrupt->SetLevel(oldLevel);
 }
-bool Lock::isHeldByCurrentThread(){}
+bool Lock::isHeldByCurrentThread(){
+	return currentThread->equals(lockThread);
+}
 
 Condition::Condition(char* debugName) { }
 Condition::~Condition() { }
