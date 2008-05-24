@@ -107,7 +107,7 @@ Lock::Lock(char* debugName) {
 	  lockThread = NULL;
 }
 Lock::~Lock() {
-	
+	delete queue;
 }
 void Lock::Acquire() {
 	 ASSERT(!isHeldByCurrentThread()); // the current thread cannot try to reacquire the lock
@@ -138,7 +138,9 @@ bool Lock::isHeldByCurrentThread(){
 	return currentThread->equals(lockThread);
 }
 
-Condition::Condition(char* debugName) { }
+Condition::Condition(char* debugName) { 
+	 name = debugName;
+}
 Condition::~Condition() { }
 void Condition::Wait(Lock* conditionLock) { ASSERT(FALSE); }
 void Condition::Signal(Lock* conditionLock) { }
