@@ -104,11 +104,13 @@ Lock::Lock(char* debugName) {
 	  name = debugName;
 	  value = FREE;
 	  queue = new List;
+	  lockThread = NULL;
 }
 Lock::~Lock() {
 	
 }
 void Lock::Acquire() {
+	 ASSERT(!isHeldByCurrentThread()); // the current thread cannot try to reacquire the lock
 	 IntStatus oldLevel = interrupt->SetLevel(IntOff);	// disable interrupts
 	 while (value == BUSY) { 			// lock not available
 		queue->Append((void *)currentThread);	// so go to sleep
@@ -118,18 +120,21 @@ void Lock::Acquire() {
 	 lockThread = currentThread;
 	 (void) interrupt->SetLevel(oldLevel);	// re-enable interrupts
 }
+
+
 void Lock::Release() {
+	ASSERT(isHeldByCurrentThread()); // the lock must be of the current thread
 	Thread *thread;
 	IntStatus oldLevel = interrupt->SetLevel(IntOff);
-	if (isHeldByCurrentThread()){
-		thread = (Thread *)queue->Remove();
-		if (thread != NULL)	   // make thread ready, consuming the lock immediately
-			scheduler->ReadyToRun(thread);
-		value = FREE;
-	}
+	thread = (Thread *)queue->Remove();
+	if (thread != NULL)	   // make thread ready, consuming the lock immediately
+		scheduler->ReadyToRun(thread);
+	value = FREE;
 	(void) interrupt->SetLevel(oldLevel);
 }
 bool Lock::isHeldByCurrentThread(){
+	if (lockThread == NULL || currentThread == NULL)
+		return false;
 	return currentThread->equals(lockThread);
 }
 
