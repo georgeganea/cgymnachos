@@ -103,23 +103,29 @@ Semaphore::V()
 Lock::Lock(char* debugName) {
 	  name = debugName;
 	  value = FREE;
+	  queue = new List;
 }
 Lock::~Lock() {
 	
 }
 void Lock::Acquire() {
 	 IntStatus oldLevel = interrupt->SetLevel(IntOff);	// disable interrupts
-	 while (value == BUSY)		// lock not available
-		 currentThread->Sleep();	// go to sleep
+	 while (value == BUSY) { 			// semaphore not available
+		queue->Append((void *)currentThread);	// so go to sleep
+		currentThread->Sleep();
+	 } 
 	 value = BUSY; 				// lock available
 	 lockThread = currentThread;
 	 (void) interrupt->SetLevel(oldLevel);	// re-enable interrupts
 }
 void Lock::Release() {
-	    IntStatus oldLevel = interrupt->SetLevel(IntOff);
-	    if (isHeldByCurrentThread())
-	    	value = FREE;
-	    (void) interrupt->SetLevel(oldLevel);
+	Thread *thread;
+	IntStatus oldLevel = interrupt->SetLevel(IntOff);
+	thread = (Thread *)queue->Remove();
+	if (thread != NULL)	   // make thread ready, consuming the lock immediately
+		scheduler->ReadyToRun(thread);
+	value = FREE;
+	(void) interrupt->SetLevel(oldLevel);
 }
 bool Lock::isHeldByCurrentThread(){
 	return currentThread->equals(lockThread);

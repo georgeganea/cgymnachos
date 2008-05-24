@@ -82,6 +82,7 @@ class Lock {
     char* name;				// for debugging
     LockStatus value;
     Thread* lockThread;
+    List *queue;
     // plus some other stuff you'll need to define
 };
 
