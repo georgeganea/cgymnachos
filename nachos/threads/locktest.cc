@@ -28,7 +28,7 @@ int value = 5;
 void
 SimpleLockThread(int which)
 {
-    for (int num = 0; num < 6; num++) {
+    for (int num = 0; num < 5; num++) {
     	lock->Acquire();
     	printf("Incremented\n");
     	value++;
@@ -51,6 +51,7 @@ LockTest()
     DEBUG('t', "Entering Lock Test");
     Thread *t = new Thread("forked thread");
     t->Fork(SimpleLockThread, 1);
+    SimpleLockThread(0);
     lock->Acquire();
     printf("value = %d\n",value);
     lock->Release();
