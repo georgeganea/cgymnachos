@@ -110,7 +110,7 @@ Lock::~Lock() {
 }
 void Lock::Acquire() {
 	 IntStatus oldLevel = interrupt->SetLevel(IntOff);	// disable interrupts
-	 while (value == BUSY) { 			// semaphore not available
+	 while (value == BUSY) { 			// lock not available
 		queue->Append((void *)currentThread);	// so go to sleep
 		currentThread->Sleep();
 	 } 
@@ -121,10 +121,12 @@ void Lock::Acquire() {
 void Lock::Release() {
 	Thread *thread;
 	IntStatus oldLevel = interrupt->SetLevel(IntOff);
-	thread = (Thread *)queue->Remove();
-	if (thread != NULL)	   // make thread ready, consuming the lock immediately
-		scheduler->ReadyToRun(thread);
-	value = FREE;
+	if (isHeldByCurrentThread()){
+		thread = (Thread *)queue->Remove();
+		if (thread != NULL)	   // make thread ready, consuming the lock immediately
+			scheduler->ReadyToRun(thread);
+		value = FREE;
+	}
 	(void) interrupt->SetLevel(oldLevel);
 }
 bool Lock::isHeldByCurrentThread(){
