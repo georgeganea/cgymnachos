@@ -15,9 +15,9 @@
   // Variables for synchronization:
   Lock* bufferLock;	 // lock for shared variables
   Condition* bufferNotEmpty; // get() waits on this condition 
-				 //   variable if buffer is empty
+				 // variable if buffer is empty
   Condition* bufferNotFull;	 // put() waits on this condition
-
+  				// variable if buffer is full
 
   
 void BoundedBuffer(const int sz) {
@@ -36,6 +36,7 @@ void BoundedBuffer(const int sz) {
 
   // Put "item" into buffer, with appropriate synchronization.
   void PutBoundedBuffer(const int item) {
+	  printf("in put\n");
     bufferLock->Acquire();
     if (numElements == bufferSize)
       bufferNotFull->Wait(bufferLock);
@@ -45,10 +46,12 @@ void BoundedBuffer(const int sz) {
     ++numElements;
     bufferNotEmpty->Signal(bufferLock);
     bufferLock->Release();
+    currentThread->Yield();
   }
 
-  // Get item from buffer and return, with appropriate synchronization.
+  // Get item from buffer, with appropriate synchronization.
   void GetBoundedBuffer(int i) {
+	  printf("in get\n");
     bufferLock->Acquire();
     if (numElements == 0)
       bufferNotEmpty->Wait(bufferLock);
@@ -58,7 +61,7 @@ void BoundedBuffer(const int sz) {
     --numElements;
     bufferNotFull->Signal(bufferLock);
     bufferLock->Release();
-    //return returnVal;
+    currentThread->Yield();
   }
 
 

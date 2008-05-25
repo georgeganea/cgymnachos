@@ -133,9 +133,7 @@ void Lock::Release() {
 	(void) interrupt->SetLevel(oldLevel);
 }
 bool Lock::isHeldByCurrentThread(){
-	if (lockThread == NULL || currentThread == NULL)
-		return false;
-	return currentThread->equals(lockThread);
+	return currentThread == lockThread;
 }
 
 Condition::Condition(char* debugName) { 
@@ -158,13 +156,10 @@ void Condition::Wait(Lock* conditionLock) {
     
 }
 void Condition::Signal(Lock* conditionLock) { 
-	ASSERT(conditionLock->isHeldByCurrentThread());
-	// wake up the first thread in the queue
-	if (!queue->IsEmpty()){
-		Semaphore* semaphore = (Semaphore *)queue->Remove();
-		semaphore->V();
-	}
-	
+	 ASSERT(conditionLock->isHeldByCurrentThread());
+	 Semaphore* semaphore = (Semaphore *)queue->Remove();
+	 if (semaphore != NULL)	   // make thread ready, consuming the V immediately
+		 semaphore->V();
 }
 void Condition::Broadcast(Lock* conditionLock) { 
 	ASSERT(conditionLock->isHeldByCurrentThread());

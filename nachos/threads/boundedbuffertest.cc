@@ -2,12 +2,12 @@
 #include "copyright.h"
 #include "system.h"
 
-#define NPRODUCERS 10
-#define NCONSUMERS 10
+#define NPRODUCERS 70
+#define NCONSUMERS 100
 
 extern void BoundedBuffer(int sz), PutBoundedBuffer(int item);
 extern void GetBoundedBuffer(int item);
-char *str;
+
 void
 BoundedBufferTest()
 {
@@ -15,15 +15,15 @@ BoundedBufferTest()
     BoundedBuffer(7);
     
     int i;
-    for (i=0; i < 10; i++ ){
-    	str = new char[10];
-    	sprintf(str,"%d\0",i);
+    for (i=0; i < NPRODUCERS; i++ ){
+    	char* str = new char[10];
+    	sprintf(str,"%d",i);
     	Thread *t = new Thread(str);
-    t->Fork(PutBoundedBuffer, i);
+    	t->Fork(PutBoundedBuffer, i);
     }
-    for ( i=0 ; i< 10 ; i++ ){
-    	str = new char[10];
-    	sprintf(str,"%d\0",i+10);
+    for ( i=0 ; i< NCONSUMERS ; i++ ){
+    	char* str = new char[10];
+    	sprintf(str,"%d",i+NPRODUCERS);
     	Thread *t = new Thread(str);
         t->Fork(GetBoundedBuffer, i);
     }

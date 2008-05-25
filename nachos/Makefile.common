@@ -65,14 +65,14 @@ THREAD_C =../threads/main.cc\
 	../machine/stats.cc\
 	../machine/timer.cc\
 	../threads/locktest.cc\
-	../threads/prodcons.cc\
-	../threads/prodconstest.cc
+	../threads/boundedbuffer.cc\
+	../threads/boundedbuffertest.cc
 	
 
 THREAD_S = ../threads/switch.s
 
 THREAD_O =main.o list.o scheduler.o synch.o synchlist.o system.o thread.o \
-	utility.o threadtest.o interrupt.o stats.o sysdep.o timer.o locktest.o prodcons.o prodconstest.o
+	utility.o threadtest.o interrupt.o stats.o sysdep.o timer.o locktest.o boundedbuffer.o boundedbuffertest.o
 
 USERPROG_H = ../userprog/addrspace.h\
 	../userprog/bitmap.h\

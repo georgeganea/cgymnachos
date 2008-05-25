@@ -297,7 +297,7 @@ locktest.o: ../threads/locktest.cc ../threads/copyright.h \
   ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
   ../machine/timer.h ../filesys/filesys.h ../filesys/synchdisk.h \
   ../machine/disk.h ../threads/synch.h ../threads/synch.h
-prodcons.o: ../threads/prodcons.cc ../threads/copyright.h \
+boundedbuffer.o: ../threads/boundedbuffer.cc ../threads/copyright.h \
   ../threads/system.h ../threads/utility.h \
   /usr/lib/gcc/i486-linux-gnu/4.2.3/include/stdbool.h ../machine/sysdep.h \
   ../threads/copyright.h /usr/include/stdio.h /usr/include/features.h \
@@ -316,8 +316,8 @@ prodcons.o: ../threads/prodcons.cc ../threads/copyright.h \
   ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
   ../machine/timer.h ../filesys/filesys.h ../filesys/synchdisk.h \
   ../machine/disk.h ../threads/synch.h ../threads/synch.h
-prodconstest.o: ../threads/prodconstest.cc ../threads/copyright.h \
-  ../threads/system.h ../threads/utility.h \
+boundedbuffertest.o: ../threads/boundedbuffertest.cc \
+  ../threads/copyright.h ../threads/system.h ../threads/utility.h \
   /usr/lib/gcc/i486-linux-gnu/4.2.3/include/stdbool.h ../machine/sysdep.h \
   ../threads/copyright.h /usr/include/stdio.h /usr/include/features.h \
   /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
