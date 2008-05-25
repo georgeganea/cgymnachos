@@ -7,7 +7,7 @@
 
 extern void BoundedBuffer(int sz), PutBoundedBuffer(int item);
 extern void GetBoundedBuffer(int item);
-char str[10];
+char *str;
 void
 BoundedBufferTest()
 {
@@ -16,11 +16,13 @@ BoundedBufferTest()
     
     int i;
     for (i=0; i < 10; i++ ){
+    	str = new char[10];
     	sprintf(str,"%d\0",i);
     	Thread *t = new Thread(str);
     t->Fork(PutBoundedBuffer, i);
     }
     for ( i=0 ; i< 10 ; i++ ){
+    	str = new char[10];
     	sprintf(str,"%d\0",i+10);
     	Thread *t = new Thread(str);
         t->Fork(GetBoundedBuffer, i);
