@@ -135,6 +135,7 @@ class Condition {
 
   private:
     char* name;
+    List *queue;
     // plus some other stuff you'll need to define
 };
 #endif

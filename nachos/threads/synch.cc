@@ -140,8 +140,35 @@ bool Lock::isHeldByCurrentThread(){
 
 Condition::Condition(char* debugName) { 
 	 name = debugName;
+	 queue = new List;
 }
-Condition::~Condition() { }
-void Condition::Wait(Lock* conditionLock) { ASSERT(FALSE); }
-void Condition::Signal(Lock* conditionLock) { }
-void Condition::Broadcast(Lock* conditionLock) { }
+Condition::~Condition() {
+	delete queue;
+}
+void Condition::Wait(Lock* conditionLock) {
+	ASSERT(conditionLock->isHeldByCurrentThread());
+	// semaphore used to put current thread to sleep until Signal() called
+	Semaphore *semaphore = new Semaphore((char *)"condition semaphore",0);
+    queue->Append(semaphore);
+    // release the lock because we do not need it as we're going to sleep
+    conditionLock->Release();
+    semaphore->P();
+    // just woke up, reacquire the lock
+    conditionLock->Acquire();
+    
+}
+void Condition::Signal(Lock* conditionLock) { 
+	ASSERT(conditionLock->isHeldByCurrentThread());
+	// wake up the first thread in the queue
+	if (!queue->IsEmpty()){
+		Semaphore* semaphore = (Semaphore *)queue->Remove();
+		semaphore->V();
+	}
+	
+}
+void Condition::Broadcast(Lock* conditionLock) { 
+	ASSERT(conditionLock->isHeldByCurrentThread());
+	// wake up everybody 
+	while (!queue->IsEmpty())
+		Signal(conditionLock);
+}
