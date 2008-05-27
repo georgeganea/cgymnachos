@@ -43,8 +43,7 @@
  */
 
 /* Stop Nachos, and print out performance stats */
-void Halt();		
- 
+void Halt();
 
 /* Address space control operations: Exit, Exec, and Join */
 
@@ -107,7 +106,6 @@ int Read(char *buffer, int size, OpenFileId id);
 
 /* Close the file, we're done reading and writing to it. */
 void Close(OpenFileId id);
-
 
 
 /* User-level thread operations: Fork and Yield.  To allow multiple

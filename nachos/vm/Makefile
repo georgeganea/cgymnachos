@@ -375,7 +375,7 @@ exception.o: ../userprog/exception.cc ../threads/copyright.h \
   ../threads/copyright.h ../filesys/openfile.h ../threads/utility.h \
   ../threads/scheduler.h ../threads/list.h ../machine/interrupt.h \
   ../threads/list.h ../machine/stats.h ../machine/timer.h \
-  ../filesys/filesys.h ../userprog/syscall.h
+  ../filesys/filesys.h ../userprog/syscall.h ../userprog/syscalls.h
 progtest.o: ../userprog/progtest.cc ../threads/copyright.h \
   ../threads/system.h ../threads/copyright.h ../threads/utility.h \
   /usr/lib/gcc/i486-linux-gnu/4.2.3/include/stdbool.h ../machine/sysdep.h \
@@ -469,6 +469,25 @@ translate.o: ../machine/translate.cc ../threads/copyright.h \
   ../threads/scheduler.h ../threads/list.h ../machine/interrupt.h \
   ../threads/list.h ../machine/stats.h ../machine/timer.h \
   ../filesys/filesys.h
+syscalls.o: ../userprog/syscalls.cc ../threads/system.h \
+  ../threads/copyright.h ../threads/utility.h \
+  /usr/lib/gcc/i486-linux-gnu/4.2.3/include/stdbool.h ../machine/sysdep.h \
+  ../threads/copyright.h /usr/include/stdio.h /usr/include/features.h \
+  /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
+  /usr/include/gnu/stubs.h /usr/include/gnu/stubs-32.h \
+  /usr/lib/gcc/i486-linux-gnu/4.2.3/include/stddef.h \
+  /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+  /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
+  /usr/lib/gcc/i486-linux-gnu/4.2.3/include/stdarg.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/string.h /usr/include/xlocale.h ../threads/thread.h \
+  ../machine/machine.h ../threads/utility.h ../machine/translate.h \
+  ../machine/disk.h ../userprog/addrspace.h ../threads/copyright.h \
+  ../filesys/filesys.h ../threads/copyright.h ../filesys/openfile.h \
+  ../threads/utility.h ../threads/scheduler.h ../threads/list.h \
+  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+  ../machine/timer.h ../filesys/filesys.h ../userprog/syscalls.h \
+  ../userprog/syscall.h
 # DEPENDENCIES MUST END AT END OF FILE
 # IF YOU PUT STUFF HERE IT WILL GO AWAY
 # see make depend above
