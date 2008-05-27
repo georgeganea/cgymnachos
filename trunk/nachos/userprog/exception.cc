@@ -109,7 +109,7 @@ char *GetSyscallParam(int reg)
 	int virt = machine->ReadRegister(reg), phys;
 	char *rc = NULL;
 	
-	if (0 == machine->Translate(virt, &phys, 1, FALSE)) {
+	if (NoException == machine->Translate(virt, &phys, 1, FALSE)) {
 		rc = (char *)&(machine->mainMemory[phys]);
 	}
 	
