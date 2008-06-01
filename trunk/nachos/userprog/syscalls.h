@@ -3,6 +3,9 @@
 
 #include "syscall.h"
 
+/* Class which implements all the system call code.
+ * They are called from the Exception Handler
+ */
 class CGYMSyscall
 {
 public:

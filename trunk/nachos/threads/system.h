@@ -34,8 +34,10 @@ extern Timer *timer;				// the hardware alarm clock
 #include "../userprog/consoledriver.h"
 #include "../userprog/timerdriver.h"
 extern Machine* machine;	// user program memory and registers
-extern ConsoleDriver *consoleDriver;
-extern TimerDriver *timerDriver;
+extern ConsoleDriver *consoleDriver; // added a console driver 
+extern TimerDriver *timerDriver; // added a timer driver
+
+// added the timer interrupt handler for the timer driver
 static void checkTimerDriver(int arg)
 {
 	timerDriver->checkTimer();

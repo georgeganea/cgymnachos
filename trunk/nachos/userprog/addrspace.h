@@ -33,7 +33,8 @@ class AddrSpace {
 
     void SaveState();			// Save/restore address space-specific
     void RestoreState();		// info on a context switch
-    
+
+    /* Added functions and data structures for file descriptors */
     FileDescriptor *fdTable[MaxFDCount];	// open file descriptor table
     
     OpenFileId createFD(char *name, OpenFile *fp);
@@ -46,6 +47,7 @@ class AddrSpace {
     unsigned int numPages;		// Number of pages in the virtual 
 					// address space
     
+    /* Internal file descriptor functions */
     int getFreeFDPos();
     int getFDByFileName(char *name);
     void dumpFD();

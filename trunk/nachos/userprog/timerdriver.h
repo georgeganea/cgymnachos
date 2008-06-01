@@ -15,6 +15,7 @@ typedef struct ntimer_t_ ntimer_t;
 
 extern Scheduler *scheduler;
 
+/* Implements the timer driver class */
 class TimerDriver
 {
 public:

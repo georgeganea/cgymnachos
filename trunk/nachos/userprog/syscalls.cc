@@ -10,12 +10,21 @@ CGYMSyscall::~CGYMSyscall()
 {
 }
 
+/* Terminates the calling thread normally.
+ * The program terminates with the given exit code.
+ */
 void CGYMSyscall::Exit(int status)
 {
 	DEBUG('s', "Exiting with status %d\n", status);
 	currentThread->Finish();
 }
 
+/* Creates a file with the given name.
+ * 
+ * Returns:
+ * 0	on success
+ * -1	on error
+ */
 int CGYMSyscall::Create(char *name)
 {
 	int rc = -1;
@@ -28,6 +37,12 @@ int CGYMSyscall::Create(char *name)
 	return rc;
 }
 
+/* Opens the file with the given name.
+ * Returns:
+ * 
+ * -1	on error
+ * fd	on success
+ */ 
 OpenFileId CGYMSyscall::Open(char *name)
 {
 	OpenFileId rc = -1;
@@ -44,6 +59,14 @@ OpenFileId CGYMSyscall::Open(char *name)
 	return rc;
 }
 
+/* Write size bytes, starting at location buffer to
+ * the id file descriptor.
+ * Uses the console driver is id is stdout (1).
+ * 
+ * Returns:
+ * number of written bytes on success
+ * -1 on error
+ */
 int CGYMSyscall::Write(char *buffer, int size, OpenFileId id)
 {
 	int rc = -1, i;
@@ -69,6 +92,13 @@ int CGYMSyscall::Write(char *buffer, int size, OpenFileId id)
 	return rc;
 }
 
+/* Reads size bytes from the given file descriptor
+ * into buffer.
+ * 
+ * Returns:
+ * the number of read bytes on success
+ * -1 on error
+ */
 int CGYMSyscall::Read(char *buffer, int size, OpenFileId id)
 {
 	int rc = -1;
@@ -92,6 +122,12 @@ int CGYMSyscall::Read(char *buffer, int size, OpenFileId id)
 	return rc;
 }
 
+/*
+ * Close an open file descriptor.
+ * Returns
+ * 0	on success
+ * -1	on error
+ */
 int CGYMSyscall::Close(OpenFileId id)
 {
 	int rc = -1;
@@ -106,6 +142,7 @@ int CGYMSyscall::Close(OpenFileId id)
 	return rc;
 }
 
+/* Suspends thread execution for the given number of ticks. */
 void CGYMSyscall::Sleep(int ticks)
 {
 	DEBUG('s', "Going to sleep (for %d ticks)\n", ticks);

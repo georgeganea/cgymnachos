@@ -34,7 +34,7 @@ CPP = /usr/local/mips/bin/cpp
 INCDIR =-I../userprog -I../threads
 CFLAGS = -G 0 -c $(INCDIR)
 
-all: halt shell matmult sort test shell2
+all: halt matmult shell sort test shell2
 
 start.o: start.s ../userprog/syscall.h
 	$(CPP) $(CPPFLAGS) start.s > strt.s
@@ -73,7 +73,6 @@ test: test.o start.o
 
 shell2.o: shell2.c
 	$(CC) $(CFLAGS) -c shell2.c
-shell: shell2.o start.o
+shell2: shell2.o start.o
 	$(LD) $(LDFLAGS) start.o shell2.o -o shell2.coff
 	../bin/coff2noff shell2.coff shell2
-	
