@@ -51,8 +51,8 @@ int CGYMSyscall::Write(char *buffer, int size, OpenFileId id)
 	
 	DEBUG('s', "Writing to file (id=%d,size=%d) [%s]\n", id, size, buffer);
 	if (f != NULL) {
-		if (id != 0) {
-			if (id == 1) { // scriem la consola
+		if (id != ConsoleInput) {
+			if (id == ConsoleOutput) { // scriem la consola
 				for (i = 0; i < size; i++)
 					consoleDriver->putchar(buffer[i]);
 				rc = i;
@@ -76,8 +76,8 @@ int CGYMSyscall::Read(char *buffer, int size, OpenFileId id)
 	
 	DEBUG('s', "Reading from file (id=%d,size=%d) [%p]\n", id, size, (void *)buffer);
 	if (f != NULL) {
-		if (id != 1) {
-			if (id == 0) { // citim de la consola
+		if (id != ConsoleOutput) {
+			if (id == ConsoleInput) { // citim de la consola
 				rc = consoleDriver->gets(buffer, size);
 			} else { // citim din fisier
 				rc = f->fp->Read(buffer, size);
