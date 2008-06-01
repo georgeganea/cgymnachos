@@ -14,10 +14,16 @@
 int
 main()
 {
-    Open("name1");
-    Close(111);
-    Read("", 123, 456);
-    Write("abc", 222, 333);
+	int len;
+	char buf[21];	
+	OpenFileId id;
+	
+	id = Open("name1");
+    len = Read(buf, 20, id);
+    buf[len] = '\0';
+    Write(buf, len, id);
+    Close(id);
+    
     Create("name2");
     Exit(6);
     Halt();

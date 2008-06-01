@@ -77,19 +77,22 @@ ExceptionHandler(ExceptionType which)
     		machine->WriteRegister(2, id);
     	} else if (type == SC_Close) {
     		DEBUG('a', "Close() called.\n");
-    		CGYMSyscall::Close( machine->ReadRegister(4) );
+    		machine->WriteRegister(2,
+    				CGYMSyscall::Close( machine->ReadRegister(4) ));
     	} else if (type == SC_Read) {
     		DEBUG('a', "Read() called.\n");
-    		int len = CGYMSyscall::Read(GetSyscallParam(4),
-    				machine->ReadRegister(5), machine->ReadRegister(6));
-    		machine->WriteRegister(2, len);
+    		machine->WriteRegister(2,
+    				CGYMSyscall::Read(GetSyscallParam(4),
+    				    				machine->ReadRegister(5), machine->ReadRegister(6)));
     	} else if (type == SC_Write) {
     		DEBUG('a', "Write() called.\n");
-    		CGYMSyscall::Write(GetSyscallParam(4),
-    				machine->ReadRegister(5), machine->ReadRegister(6));
+    		machine->WriteRegister(2,
+    				CGYMSyscall::Write(GetSyscallParam(4),
+    						machine->ReadRegister(5), machine->ReadRegister(6)));
     	} else if (type == SC_Create) {
     		DEBUG('a', "Create() called.\n");
-    		CGYMSyscall::Create( GetSyscallParam(4) );
+    		machine->WriteRegister(2,
+    				CGYMSyscall::Create( GetSyscallParam(4) ));
     	}
     	
     	int pc = machine->ReadRegister(PCReg);

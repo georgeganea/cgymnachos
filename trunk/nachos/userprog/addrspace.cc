@@ -112,7 +112,10 @@ AddrSpace::AddrSpace(OpenFile *executable)
         executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
 			noffH.initData.size, noffH.initData.inFileAddr);
     }
-
+    
+// finally, initialize the open file descriptor table
+    fdTable[0] = new FileDescriptor("stdin", 0, NULL);
+    fdTable[1] = new FileDescriptor("stdout", 1, NULL);
 }
 
 //----------------------------------------------------------------------
@@ -180,4 +183,90 @@ void AddrSpace::RestoreState()
 {
     machine->pageTable = pageTable;
     machine->pageTableSize = numPages;
+}
+
+
+OpenFileId AddrSpace::createFD(char *name, OpenFile *fp)
+{
+	OpenFileId rc = -1; 
+	int pos;
+	
+	if (name != NULL) {
+		if ((pos = getFreeFDPos()) != -1) {
+			if (getFDByFileName(name) == -1) {
+				fdTable[pos] = new FileDescriptor(name, pos, fp);
+				rc = pos;
+				
+				dumpFD();
+			} else {
+				// eroare -- deja e deschis
+			}
+		} else {
+			// eroare -- nu mai sunt locuri libere
+		}
+	} else {
+		// eroare -- name e NULL
+	}
+	
+	return rc;
+}
+
+int AddrSpace::freeFD(OpenFileId fd)
+{
+	int rc = -1;
+	
+	if (fdTable[fd] != NULL) {
+		delete fdTable[fd];
+		fdTable[fd] = NULL;
+		rc = 0;
+		
+		dumpFD();
+	}
+	
+	return rc;
+}
+
+void AddrSpace::freeFDTable()
+{
+	int i;
+	
+	for (i = MaxFDCount - 1; i >= 0; i--) {
+		freeFD(i);
+	}
+}
+
+
+int AddrSpace::getFreeFDPos()
+{
+	int i;
+	
+	for (i = 0; i < MaxFDCount; i++) {
+		if (fdTable[i] == NULL) break;
+	}
+	
+	return (i < MaxFDCount) ? i : -1;
+}
+
+int AddrSpace::getFDByFileName(char *name)
+{
+	int i;
+	
+	for (i = 0; i < MaxFDCount; i++) {
+		if (fdTable[i] != NULL && !strcmp(fdTable[i]->name, name)) break;
+	}
+
+	return (i < MaxFDCount) ? i : -1;
+}
+
+void AddrSpace::dumpFD() {
+	int i;
+	
+	for (i = 0; i < MaxFDCount; i++) {
+		if (fdTable[i] == NULL) {
+			DEBUG('f', "fdTable[%d] = NULL\n", i);
+		} else {
+			DEBUG('f', "fdTable[%d] = %s:%d:%p\n",
+					i, fdTable[i]->name, fdTable[i]->fd, fdTable[i]->fp);
+		}
+	}
 }
