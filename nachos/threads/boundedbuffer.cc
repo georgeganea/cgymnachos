@@ -20,7 +20,7 @@
   				// variable if buffer is full
 
   
-void BoundedBuffer(const int sz) {
+void BoundedBuffer(const int sz) {// init function - creates everything we need to launch the consumers and the producers
     bufferSize = sz;
     buffer = new int[sz];
     nextToRemove = 0;
@@ -35,13 +35,13 @@ void BoundedBuffer(const int sz) {
  
 
   // Put "item" into buffer, with appropriate synchronization.
-  void PutBoundedBuffer(const int item) {
+  void PutBoundedBuffer(const int item) { // producer thread
 	  printf("in put\n");
     bufferLock->Acquire();
-    if (numElements == bufferSize)
-      bufferNotFull->Wait(bufferLock);
-    unsigned int next = (nextToRemove + numElements) % bufferSize;
-    buffer[next] = item;
+    if (numElements == bufferSize) // buffer full
+      bufferNotFull->Wait(bufferLock); // wait for some room in the buffer
+    unsigned int next = (nextToRemove + numElements) % bufferSize;// calculate "put" position
+    buffer[next] = item; // producers insert in one end, consumers extract from the other
     printf("am pus %d\n",item);
     ++numElements;
     bufferNotEmpty->Signal(bufferLock);
@@ -50,17 +50,17 @@ void BoundedBuffer(const int sz) {
   }
 
   // Get item from buffer, with appropriate synchronization.
-  void GetBoundedBuffer(int i) {
+  void GetBoundedBuffer(int i) {//consumer thread
 	  printf("in get\n");
     bufferLock->Acquire();
-    if (numElements == 0)
-      bufferNotEmpty->Wait(bufferLock);
-    int returnVal = buffer[nextToRemove];
+    if (numElements == 0)//if nothing to consume
+      bufferNotEmpty->Wait(bufferLock);// wait for some "products" in the buffer
+    int returnVal = buffer[nextToRemove]; // consume it
     printf("am scos %d\n",returnVal);
     nextToRemove = (nextToRemove + 1) % bufferSize;
     --numElements;
     bufferNotFull->Signal(bufferLock);
-    bufferLock->Release();
+    bufferLock->Release();//release the lock
     currentThread->Yield();
   }
 
