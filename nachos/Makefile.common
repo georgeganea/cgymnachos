@@ -82,7 +82,10 @@ USERPROG_H = ../userprog/addrspace.h\
 	../machine/machine.h\
 	../machine/mipssim.h\
 	../machine/translate.h\
-	../userprog/syscalls.h
+	../userprog/syscalls.h\
+	../userprog/consoledriver.h\
+	../userprog/timerdriver.h\
+	../userprog/filedescriptor.h
 
 USERPROG_C = ../userprog/addrspace.cc\
 	../userprog/bitmap.cc\
@@ -92,10 +95,13 @@ USERPROG_C = ../userprog/addrspace.cc\
 	../machine/machine.cc\
 	../machine/mipssim.cc\
 	../machine/translate.cc\
-	../userprog/syscalls.cc
+	../userprog/syscalls.cc\
+	../userprog/consoledriver.cc\
+	../userprog/timerdriver.cc\
+	../userprog/filedescriptor.cc
 
 USERPROG_O = addrspace.o bitmap.o exception.o progtest.o console.o machine.o \
-	mipssim.o translate.o syscalls.o
+	mipssim.o translate.o syscalls.o consoledriver.o timerdriver.o filedescriptor.o
 
 VM_H = 
 VM_C = 

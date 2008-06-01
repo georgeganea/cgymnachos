@@ -26,7 +26,7 @@ public:
 	typedef int OpenFileId;	
 	 
 	/* Create a Nachos file, with "name" */
-	static void Create(char *name);
+	static int Create(char *name);
 
 	/* Open the Nachos file "name", and return an "OpenFileId" that can 
 	 * be used to read and write to the file.
@@ -34,7 +34,7 @@ public:
 	static OpenFileId Open(char *name);
 
 	/* Write "size" bytes from "buffer" to the open file. */
-	static void Write(char *buffer, int size, OpenFileId id);
+	static int Write(char *buffer, int size, OpenFileId id);
 
 	/* Read "size" bytes from the open file into "buffer".  
 	 * Return the number of bytes actually read -- if the open file isn't
@@ -45,7 +45,7 @@ public:
 	static int Read(char *buffer, int size, OpenFileId id);
 
 	/* Close the file, we're done reading and writing to it. */
-	static void Close(OpenFileId id);
+	static int Close(OpenFileId id);
 };
 
 #endif /*SYSCALLS_H_*/
