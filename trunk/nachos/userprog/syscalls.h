@@ -46,6 +46,10 @@ public:
 
 	/* Close the file, we're done reading and writing to it. */
 	static int Close(OpenFileId id);
+	
+	/* Sleep a number of ticks */
+	static void Sleep(int ticks);
 };
+
 
 #endif /*SYSCALLS_H_*/

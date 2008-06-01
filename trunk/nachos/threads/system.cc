@@ -62,7 +62,7 @@ extern void Cleanup();
 static void
 TimerInterruptHandler(int dummy)
 {
-    if (interrupt->getStatus() != IdleMode)
+	if (interrupt->getStatus() != IdleMode)
 	interrupt->YieldOnReturn();
 }
 
@@ -136,7 +136,7 @@ Initialize(int argc, char **argv)
     interrupt = new Interrupt;			// start up interrupt handling
     scheduler = new Scheduler();		// initialize the ready queue
     if (randomYield)				// start the timer (if needed)
-	timer = new Timer(TimerInterruptHandler, 0, randomYield);
+    	timer = new Timer(TimerInterruptHandler, 0, randomYield);
 
     threadToBeDestroyed = NULL;
 
@@ -155,6 +155,8 @@ Initialize(int argc, char **argv)
     // aici avem driverul de consola si timer
     consoleDriver = new ConsoleDriver();
     timerDriver = new TimerDriver();
+    
+    new Timer(checkTimerDriver, 0, false); // start a timer for our timer driver
 #endif
 
 #ifdef FILESYS

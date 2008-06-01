@@ -33,7 +33,7 @@ OpenFileId CGYMSyscall::Open(char *name)
 	OpenFileId rc = -1;
 	DEBUG('s', "Opening file [%s]\n", name);
 	OpenFile *fp = fileSystem->Open(name);
-	
+		
 	if (fp != NULL) {
 		rc = (currentThread->space)->createFD(name, fp);
 		DEBUG('s', "newfd = %d\n", rc);
@@ -46,14 +46,16 @@ OpenFileId CGYMSyscall::Open(char *name)
 
 int CGYMSyscall::Write(char *buffer, int size, OpenFileId id)
 {
-	int rc = -1;
+	int rc = -1, i;
 	FileDescriptor *f = currentThread->space->fdTable[id];
 	
 	DEBUG('s', "Writing to file (id=%d,size=%d) [%s]\n", id, size, buffer);
 	if (f != NULL) {
 		if (id != 0) {
 			if (id == 1) { // scriem la consola
-				
+				for (i = 0; i < size; i++)
+					consoleDriver->putchar(buffer[i]);
+				rc = i;
 			} else { // scriem in fisier
 				rc = f->fp->Write(buffer, size);
 			}
@@ -76,7 +78,7 @@ int CGYMSyscall::Read(char *buffer, int size, OpenFileId id)
 	if (f != NULL) {
 		if (id != 1) {
 			if (id == 0) { // citim de la consola
-				
+				rc = consoleDriver->gets(buffer, size);
 			} else { // citim din fisier
 				rc = f->fp->Read(buffer, size);
 			}
@@ -102,4 +104,14 @@ int CGYMSyscall::Close(OpenFileId id)
 	}
 	
 	return rc;
+}
+
+void CGYMSyscall::Sleep(int ticks)
+{
+	DEBUG('s', "Going to sleep (for %d ticks)\n", ticks);
+	timerDriver->addTimer(currentThread, ticks);
+	
+	IntStatus oldValue = interrupt->SetLevel(IntOff); // disable interrupts
+	currentThread->Sleep();
+	interrupt->SetLevel(oldValue); // restore interrupts
 }

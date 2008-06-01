@@ -114,8 +114,8 @@ AddrSpace::AddrSpace(OpenFile *executable)
     }
     
 // finally, initialize the open file descriptor table
-    fdTable[0] = new FileDescriptor("stdin", 0, NULL);
-    fdTable[1] = new FileDescriptor("stdout", 1, NULL);
+    fdTable[0] = new FileDescriptor("ConsoleInput", 0, NULL);
+    fdTable[1] = new FileDescriptor("ConsoleOutput", 1, NULL);
 }
 
 //----------------------------------------------------------------------
