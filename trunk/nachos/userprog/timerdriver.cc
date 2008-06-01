@@ -41,8 +41,7 @@ void TimerDriver::checkTimer(void)
 		if (timers[i].t != NULL) {
 			if (--timers[i].ticksRemaining == 0) {
 				scheduler->ReadyToRun(timers[i].t);
-				timers[i].t = NULL;
-				timers[i].ticksRemaining = -1;
+				initTimer(i);
 				
 				DEBUG('u', "waking up thread\n");
 			}

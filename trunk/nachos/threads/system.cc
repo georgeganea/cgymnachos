@@ -156,7 +156,7 @@ Initialize(int argc, char **argv)
     consoleDriver = new ConsoleDriver();
     timerDriver = new TimerDriver();
     
-    new Timer(checkTimerDriver, 0, false); // start a timer for our timer driver
+    timer = new Timer(checkTimerDriver, 0, false); // start a timer for our timer driver
 #endif
 
 #ifdef FILESYS
