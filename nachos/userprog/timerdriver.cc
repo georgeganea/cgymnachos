@@ -13,6 +13,9 @@ TimerDriver::~TimerDriver()
 {
 }
 
+/* Adds a new timer for a thread. The timer will activate
+ * after the number of ticks given.
+ */
 int TimerDriver::addTimer(Thread *thread, int ticks)
 {
 	int rc = -1, i;
@@ -33,6 +36,10 @@ int TimerDriver::addTimer(Thread *thread, int ticks)
 	return rc;
 }
 
+/* Called by the kernel, will decrement the number 
+ * of remaining ticks on all timers and wake up any
+ * threads whose remainingTicks value has reached 0.
+ */
 void TimerDriver::checkTimer(void)
 {
 	int i;
@@ -49,6 +56,7 @@ void TimerDriver::checkTimer(void)
 	}
 }
 
+/* Initialize the timer data structure to a void timer */
 void TimerDriver::initTimer(int i)
 {
 	timers[i].t = NULL;

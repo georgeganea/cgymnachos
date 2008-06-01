@@ -4,6 +4,7 @@
 #include "console.h"
 #include "synch.h"
 
+/* Implements the console driver */
 class ConsoleDriver
 {
 public:

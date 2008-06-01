@@ -29,7 +29,7 @@
 #define SC_Close	8
 #define SC_Fork		9
 #define SC_Yield	10
-#define SC_Sleep	11
+#define SC_Sleep	11 // Added code for the Sleep syscall
 
 #ifndef IN_ASM
 

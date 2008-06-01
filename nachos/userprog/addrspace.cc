@@ -113,9 +113,9 @@ AddrSpace::AddrSpace(OpenFile *executable)
 			noffH.initData.size, noffH.initData.inFileAddr);
     }
     
-// finally, initialize the open file descriptor table
-    fdTable[0] = new FileDescriptor("ConsoleInput", 0, NULL);
-    fdTable[1] = new FileDescriptor("ConsoleOutput", 1, NULL);
+    // finally, initialize the open file descriptor table
+    fdTable[0] = new FileDescriptor("ConsoleInput", 0, NULL); // stdin
+    fdTable[1] = new FileDescriptor("ConsoleOutput", 1, NULL); // stdout
 }
 
 //----------------------------------------------------------------------
@@ -185,7 +185,13 @@ void AddrSpace::RestoreState()
     machine->pageTableSize = numPages;
 }
 
-
+/* Our functions:
+ * createFD - takes up a new space in the open file descriptor table.
+ * 
+ * Returns:
+ * fd	on success
+ * -1	on error
+ */
 OpenFileId AddrSpace::createFD(char *name, OpenFile *fp)
 {
 	OpenFileId rc = -1; 
@@ -211,6 +217,12 @@ OpenFileId AddrSpace::createFD(char *name, OpenFile *fp)
 	return rc;
 }
 
+/* freeFD - frees an occupied file descriptor slot
+ * 
+ * Returns:
+ * 0	on success
+ * -1	on error
+ */
 int AddrSpace::freeFD(OpenFileId fd)
 {
 	int rc = -1;
@@ -226,6 +238,7 @@ int AddrSpace::freeFD(OpenFileId fd)
 	return rc;
 }
 
+// freeFDTable - flushes the kernel file descriptor table
 void AddrSpace::freeFDTable()
 {
 	int i;
@@ -235,7 +248,12 @@ void AddrSpace::freeFDTable()
 	}
 }
 
-
+/* getFreeFDPos - returns the next available file descriptor slot index
+ * 
+ * Returns:
+ * fd	if there is a free slot
+ * -1	if file descriptor table is full
+ */
 int AddrSpace::getFreeFDPos()
 {
 	int i;
@@ -247,6 +265,12 @@ int AddrSpace::getFreeFDPos()
 	return (i < MaxFDCount) ? i : -1;
 }
 
+/* getFDByFileName - checks to see whether a file is already open
+ * 
+ * returns:
+ * fd	file descriptor index which contains the open file
+ * -1	if the file is not open
+ */
 int AddrSpace::getFDByFileName(char *name)
 {
 	int i;
@@ -258,6 +282,9 @@ int AddrSpace::getFDByFileName(char *name)
 	return (i < MaxFDCount) ? i : -1;
 }
 
+/* dumpFD - prints out the file descriptor table
+ * for debugging purposes
+ */
 void AddrSpace::dumpFD() {
 	int i;
 	

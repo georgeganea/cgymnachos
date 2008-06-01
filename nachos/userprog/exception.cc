@@ -57,6 +57,8 @@ ExceptionHandler(ExceptionType which)
     int type = machine->ReadRegister(2);
 
     if (which == SyscallException) {
+    	// Added support for all implemented syscalls
+    	
     	/*
     	int val = machine->ReadRegister(4), c;
  
@@ -98,6 +100,9 @@ ExceptionHandler(ExceptionType which)
     		CGYMSyscall::Sleep( machine->ReadRegister(4) );
     	}
     	
+    	/* Advance the PC and the other PC related registers
+    	 * before returning from the syscall 
+    	 */
     	int pc = machine->ReadRegister(PCReg);
     	machine->WriteRegister(PrevPCReg, pc);
     	pc = machine->ReadRegister(NextPCReg);
@@ -110,6 +115,10 @@ ExceptionHandler(ExceptionType which)
     }
 }
 
+/*
+ * This method returns the physical address from the user space address,
+ * given in register reg.
+ */
 char *GetSyscallParam(int reg)
 {
 	int virt = machine->ReadRegister(reg), phys;

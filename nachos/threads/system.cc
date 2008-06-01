@@ -29,8 +29,8 @@ SynchDisk   *synchDisk;
 
 #ifdef USER_PROGRAM	// requires either FILESYS or FILESYS_STUB
 Machine *machine;	// user program memory and registers
-ConsoleDriver *consoleDriver;
-TimerDriver *timerDriver;
+ConsoleDriver *consoleDriver; // console driver
+TimerDriver *timerDriver; // timer driver
 #endif
 
 #ifdef NETWORK
@@ -152,9 +152,8 @@ Initialize(int argc, char **argv)
 #ifdef USER_PROGRAM
     machine = new Machine(debugUserProg);	// this must come first
     
-    // aici avem driverul de consola si timer
-    consoleDriver = new ConsoleDriver();
-    timerDriver = new TimerDriver();
+    consoleDriver = new ConsoleDriver(); // initialize the console driver
+    timerDriver = new TimerDriver(); // initialize the timer driver
     
     timer = new Timer(checkTimerDriver, 0, false); // start a timer for our timer driver
 #endif
