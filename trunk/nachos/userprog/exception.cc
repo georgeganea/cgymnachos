@@ -57,9 +57,9 @@ ExceptionHandler(ExceptionType which)
     int type = machine->ReadRegister(2);
 
     if (which == SyscallException) {
-    	int val = machine->ReadRegister(4), c;
-    	
     	/*
+    	int val = machine->ReadRegister(4), c;
+ 
     	DEBUG('a', "value=%d\n", val); 	
     	machine->Translate(val, &c, 1, FALSE);
        	DEBUG('a', "string = [%s]\n", (char *)&(machine->mainMemory[c]));
