@@ -153,7 +153,6 @@ void Condition::Wait(Lock* conditionLock) {
     semaphore->P();
     // just woke up, reacquire the lock
     conditionLock->Acquire();
-    
 }
 void Condition::Signal(Lock* conditionLock) { 
 	 ASSERT(conditionLock->isHeldByCurrentThread());
