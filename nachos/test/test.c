@@ -25,6 +25,9 @@ main()
     Close(id);
     
     Create("name2");
+    
+    Sleep(200000);
+    
     Exit(6);
     Halt();
     /* not reached */

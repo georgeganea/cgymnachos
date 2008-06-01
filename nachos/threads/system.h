@@ -15,8 +15,6 @@
 #include "interrupt.h"
 #include "stats.h"
 #include "timer.h"
-#include "../userprog/consoledriver.h"
-#include "../userprog/timerdriver.h"
 
 // Initialization and cleanup routines
 extern void Initialize(int argc, char **argv); 	// Initialization,
@@ -33,9 +31,15 @@ extern Timer *timer;				// the hardware alarm clock
 
 #ifdef USER_PROGRAM
 #include "machine.h"
+#include "../userprog/consoledriver.h"
+#include "../userprog/timerdriver.h"
 extern Machine* machine;	// user program memory and registers
 extern ConsoleDriver *consoleDriver;
-extern TimerDriver *timerDriver; 
+extern TimerDriver *timerDriver;
+static void checkTimerDriver(int arg)
+{
+	timerDriver->checkTimer();
+}
 #endif
 
 #ifdef FILESYS_NEEDED 		// FILESYS or FILESYS_STUB 

@@ -93,6 +93,9 @@ ExceptionHandler(ExceptionType which)
     		DEBUG('a', "Create() called.\n");
     		machine->WriteRegister(2,
     				CGYMSyscall::Create( GetSyscallParam(4) ));
+    	} else if (type == SC_Sleep) {
+    		DEBUG('a', "Sleep() called.\n");
+    		CGYMSyscall::Sleep( machine->ReadRegister(4) );
     	}
     	
     	int pc = machine->ReadRegister(PCReg);

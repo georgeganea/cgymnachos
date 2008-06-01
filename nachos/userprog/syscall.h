@@ -29,6 +29,7 @@
 #define SC_Close	8
 #define SC_Fork		9
 #define SC_Yield	10
+#define SC_Sleep	11
 
 #ifndef IN_ASM
 
@@ -120,7 +121,10 @@ void Fork(void (*func)());
 /* Yield the CPU to another runnable thread, whether in this address space 
  * or not. 
  */
-void Yield();		
+void Yield();
+
+/* Sleeps for a number of ticks */
+void Sleep(int ticks);
 
 #endif
 
